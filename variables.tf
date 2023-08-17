@@ -10,3 +10,4 @@ variable "max_size" {}
 variable "min_size" {}
 variable "subnets" {}
 variable "app_port" {}
+variable "allow_ssh_cidr" {}
