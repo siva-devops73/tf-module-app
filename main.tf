@@ -45,15 +45,15 @@ resource "aws_launch_template" "main" {
   }))
 
   ##KMS key
-  block_device_mappings {
-    device_name = "/dev/sda1"
+//  block_device_mappings {
+//    device_name = "/dev/sda1"
 
-    ebs {
-      volume_size = 10
-      encrypted = "false"
-      kms_key_id = var.kms_key_id
-    }
-  }
+//    ebs {
+//      volume_size = 10
+//      encrypted = "false"
+//        kms_key_id = var.kms_key_id
+//    }
+//  }
 }
 
 ## Auto Scaling Group
