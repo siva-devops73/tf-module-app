@@ -38,6 +38,23 @@ resource "aws_lb_target_group" "main" {
   vpc_id   = var.vpc_id
 }
 
+## Target group listener rule
+resource "aws_lb_listener_rule" "main" {
+  listener_arn = var.listener_arn
+  priority     = var.lb_rule_priority
+
+  action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.main.arn
+  }
+
+  condition {
+    host_header {
+      values = ["${var.component}-${var.env}-devops73.store"]
+    }
+  }
+}
+
 
 ## Launch Template of Auto Scaling Group
 resource "aws_launch_template" "main" {
@@ -86,18 +103,14 @@ resource "aws_autoscaling_group" "main" {
   }
 }
 
-
-
-
-
 ## DNS Record
-//resource "aws_route53_record" "dns" {
- // zone_id = "Z07939863Q47686AYR05W"
-//  name    = "${var.component}-dev"
-//  type    = "A"
- // ttl     = 30
- // records = [aws_instance.instance.private_ip]
-//}
+resource "aws_route53_record" "dns" {
+  zone_id = "Z07939863Q47686AYR05W"
+  name    = "${var.component}-${var.env}-devops73.store"
+  type    = "CNAME"
+  ttl     = 30
+  records = [var.lb_dns_name]
+}
 
 
 
