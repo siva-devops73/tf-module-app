@@ -50,7 +50,7 @@ resource "aws_lb_listener_rule" "main" {
 
   condition {
     host_header {
-      values = ["${var.component}-${var.env}-devops73.store"]
+      values = ["${var.component}-${var.env}.devops73.store"]
     }
   }
 }
@@ -106,7 +106,7 @@ resource "aws_autoscaling_group" "main" {
 ## DNS Record
 resource "aws_route53_record" "dns" {
   zone_id = "Z07939863Q47686AYR05W"
-  name    = "${var.component}-${var.env}-devops73.store"
+  name    = "${var.component}-${var.env}.devops73.store"
   type    = "CNAME"
   ttl     = 30
   records = [var.lb_dns_name]
