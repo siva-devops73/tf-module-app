@@ -35,6 +35,7 @@ resource "aws_lb_target_group" "main" {
   name     = "${var.component}-${var.env}-tg"
   port     = var.app_port
   protocol = "HTTP"
+  deregistration_delay = 30
   vpc_id   = var.vpc_id
 
   health_check {
