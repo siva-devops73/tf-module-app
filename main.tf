@@ -122,6 +122,20 @@ resource "aws_autoscaling_group" "main" {
   }
 }
 
+resource "aws_autoscaling_policy" "asg-cpu-rule" {
+  name                        = "CPULoadDetect"
+  autoscaling_group_name      = aws_autoscaling_group.main.name
+  policy_type                 = "TargetTrackingScling"
+  estimated_instance_warmup   = 120
+  target_tracking_configuration {
+    predefined_metric_specification {
+      predefined_metric_type = "ASGAverageCPUUtilization"
+    }
+    target_value = 30.0
+  }
+}
+
+
 ## DNS Record
 resource "aws_route53_record" "dns" {
   zone_id = "Z07939863Q47686AYR05W"
